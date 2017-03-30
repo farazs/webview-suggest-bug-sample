@@ -1,0 +1,3 @@
+rootProject.name = 'WebviewSuggestBugSample'
+
+include ':app'
