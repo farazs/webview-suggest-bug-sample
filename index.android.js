@@ -14,11 +14,39 @@ import {
 } from 'react-native';
 
 export default class WebviewSuggestBugSample extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false
+    };
+  }
+
+  _renderLoadingIndicator = () => {
+    if (this.state.loading) {
+      return (
+        <Text style={styles.loadingOverlay}>
+          LOADING...
+        </Text>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  _onNavigationStateChange = (navState) => {
+    this.setState({ loading: navState.loading });
+  }
+
   render() {
     return (
+      <View style={styles.container}>
         <WebView
-          source={{ uri: "https://www.w3schools.com/html/html_forms.asp" }}
+          source={{ uri: "https://angular-ui.github.io/ui-router/sample" }}
+          onNavigationStateChange={this._onNavigationStateChange}
         />
+        {this._renderLoadingIndicator()}
+      </View>
     );
   }
 }
@@ -26,20 +54,19 @@ export default class WebviewSuggestBugSample extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  loadingOverlay: {
+    flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    backgroundColor:'rgba(255,255,255,0.7)',
+    position:'absolute',
+    top:0,
+    left:0,
+    bottom:0,
+    right:0
+  }
 });
 
 AppRegistry.registerComponent('WebviewSuggestBugSample', () => WebviewSuggestBugSample);
